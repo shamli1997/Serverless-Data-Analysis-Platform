@@ -86,9 +86,9 @@ Here's a walkthrough of implemented features:
    - Click "Create VPC".
 
 2. **Create Subnets**:
-   - Create a public subnet and a private subnet.
-   - For the public subnet, choose a CIDR block (e.g., `10.0.1.0/24`).
-   - For the private subnet, choose a different CIDR block (e.g., `10.0.2.0/24`).
+   - Create two public subnets and two private subnets within the VPC.
+   - For the public subnets, choose CIDR blocks (e.g., `10.0.1.0/24` and `10.0.3.0/24`).
+   - For the private subnets, choose different CIDR blocks (e.g., `10.0.2.0/24` and `10.0.4.0/24`).
 
 3. **Create Internet Gateway**:
    - Navigate to "Internet Gateways" in the VPC Dashboard.
@@ -97,9 +97,10 @@ Here's a walkthrough of implemented features:
 
 4. **Route Table**:
    - Navigate to "Route Tables" in the VPC Dashboard.
-   - Create a route table for the public subnet.
+   - Create a route table for the public subnets.
    - Edit routes and add a route that directs `0.0.0.0/0` to the Internet Gateway.
-   - Associate the public subnet with this route table.
+   - Associate the public subnets with this route table.
+   - Create a separate route table for the private subnets.
 
 ### 2. Setting Up RDS Instances
 
@@ -110,15 +111,18 @@ Here's a walkthrough of implemented features:
    - Select the "Free tier" template if applicable.
    - In "Connectivity", select the VPC you created.
    - Ensure "Publicly accessible" is set to `Yes`.
-   - Choose the public subnet for the database.
+   - Choose the public subnet group for the database.
    - Set up the database credentials and configurations.
    - Click "Create database".
 
 2. **Create Private RDS Instance**:
    - Follow the same steps as the public RDS instance.
    - Ensure "Publicly accessible" is set to `No`.
-   - Choose the private subnet for the database.
+   - Choose the private subnet group for the database.
    - Click "Create database".
+
+3. **Create Subnet Groups**:
+   - Create subnet groups for both public and private subnets in the RDS console.
 
 ### 3. Setting Up Lambda Functions
 
@@ -132,7 +136,7 @@ Here's a walkthrough of implemented features:
 2. **Configure VPC Access for Lambda**:
    - In the Lambda function configuration, go to the "VPC" section.
    - Select the VPC you created.
-   - Choose the private subnet.
+   - Choose the private subnets.
    - Choose the appropriate security group that allows access to the RDS instance.
 
 3. **Add Environment Variables**:
