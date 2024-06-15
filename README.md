@@ -1,8 +1,8 @@
-# Project 2: Serverless Data Analysis Platform
+# Serverless Data Analysis Platform
 
 ## Overview
 
-Project 2 revolves around crafting a cutting-edge serverless data analysis platform. This platform empowers Lambda functions to access and analyze data from both a public RDS database and a private RDS database, with the results elegantly stored in an S3 bucket.
+This project revolves around crafting a cutting-edge serverless data analysis platform. This platform empowers Lambda functions to access and analyze data from both a public RDS database and a private RDS database, with the results elegantly stored in an S3 bucket.
 
 ## Key Components
 
