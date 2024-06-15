@@ -1,8 +1,8 @@
-# Serverless Data Analysis Platform
+# Project 2: Serverless Data Analysis Platform
 
 ## Overview
 
-This is a cutting-edge serverless data analysis platform. This platform empowers Lambda functions to access and analyze data from both a public RDS database and a private RDS database, with the results elegantly stored in an S3 bucket.
+Project 2 revolves around crafting a cutting-edge serverless data analysis platform. This platform empowers Lambda functions to access and analyze data from both a public RDS database and a private RDS database, with the results elegantly stored in an S3 bucket.
 
 ## Key Components
 
@@ -19,9 +19,48 @@ This is a cutting-edge serverless data analysis platform. This platform empowers
 4. **VPC and Subnets**:
    - **Network Configuration**: VPC setup to include both public and private subnets to manage RDS access.
 
-## Architecture Diagram
+## Architecture Diagrams
 
-![Serverless Data Analysis Platform Architecture Diagram](images/architecture-diagram.png)
+### Publicly Accessible RDS
+
+![Publicly Accessible RDS](https://github.com/shamli1997/Serverless-Data-Analysis-Platform/blob/main/Public_RDS.png)
+
+#### Explanation
+This diagram illustrates how a publicly accessible RDS instance can be accessed:
+
+1. **Client**: Represents the user or application trying to access the RDS instance.
+2. **Firewall**: Ensures secure communication by allowing or blocking specific traffic.
+3. **Internet Gateway**: Provides a path for communication between the client and the RDS instance over the internet.
+4. **VPC**: Virtual Private Cloud that contains the public subnet.
+5. **Public Subnet**: A subnet that is accessible from the internet.
+6. **Security Group**: Acts as a virtual firewall for the RDS instance to control inbound and outbound traffic.
+7. **Amazon RDS DB Instance**: The actual RDS database instance that is publicly accessible.
+   
+## Video Walkthrough
+
+Here's a walkthrough of implemented features:
+
+<img src='https://github.com/shamli1997/Serverless-Data-Analysis-Platform/blob/main/public-rds-1.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+### Privately Accessible RDS
+
+![Privately Accessible RDS](https://github.com/shamli1997/Serverless-Data-Analysis-Platform/blob/main/Private_RDS.png)
+
+#### Explanation
+This diagram illustrates how a privately accessible RDS instance is accessed within a VPC:
+
+1. **AWS Cloud**: Represents the AWS infrastructure.
+2. **VPC**: Virtual Private Cloud that contains the private subnet.
+3. **Private Subnet**: A subnet that is not accessible from the internet.
+4. **Lambda Function**: Executes code that needs access to the RDS instance.
+5. **RDS DB Instance**: The actual RDS database instance that is privately accessible.
+6. **Security Group**: Controls the inbound and outbound traffic for the Lambda function and RDS instance.
+
+## Video Walkthrough
+
+Here's a walkthrough of implemented features:
+
+<img src='https://github.com/shamli1997/Serverless-Data-Analysis-Platform/blob/main/private-vpc-1.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 ## How It Works
 
@@ -34,16 +73,6 @@ This is a cutting-edge serverless data analysis platform. This platform empowers
 
 3. **Storing Results**:
    - The results of the analysis are stored in an S3 bucket.
-
-## Accessing RDS with DBeaver
-
-### Public RDS
-- **Accessible**: When the public access setting is enabled (`Publicly Accessible` set to `Yes`), the RDS instance can be accessed using DBeaver.
-- **Demo**: Demonstration on how to connect to a public RDS instance using DBeaver.
-
-### Private RDS
-- **Inaccessible Directly**: When the public access setting is disabled (`Publicly Accessible` set to `No`), the RDS instance cannot be accessed directly using DBeaver.
-- **Demo**: Demonstration on accessing a private RDS instance using DBeaver within the VPC.
 
 ## Getting Started
 
@@ -77,3 +106,4 @@ This is a cutting-edge serverless data analysis platform. This platform empowers
 ## Conclusion
 
 This project demonstrates the integration of serverless computing with traditional relational databases in a secure and efficient manner. By leveraging AWS Lambda, RDS, S3, and VPC configurations, you can build a scalable data analysis platform that meets various data processing needs.
+
