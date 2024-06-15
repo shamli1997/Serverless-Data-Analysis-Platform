@@ -74,34 +74,85 @@ Here's a walkthrough of implemented features:
 3. **Storing Results**:
    - The results of the analysis are stored in an S3 bucket.
 
-## Getting Started
+## Setting Up the Environment
 
-### Setting Up RDS Instances
+### 1. Setting Up VPC
 
-1. **Create Public RDS**:
-   - Set `Publicly Accessible` to `Yes`.
-   - Configure security groups and settings.
+1. **Create VPC**:
+   - Navigate to the VPC Dashboard in the AWS Management Console.
+   - Click on "Create VPC".
+   - Set a name for your VPC.
+   - Choose the IPv4 CIDR block (e.g., `10.0.0.0/16`).
+   - Click "Create VPC".
 
-2. **Create Private RDS**:
-   - Set `Publicly Accessible` to `No`.
-   - Place the RDS instance in a private subnet within the VPC.
+2. **Create Subnets**:
+   - Create a public subnet and a private subnet.
+   - For the public subnet, choose a CIDR block (e.g., `10.0.1.0/24`).
+   - For the private subnet, choose a different CIDR block (e.g., `10.0.2.0/24`).
 
-### Configuring Lambda Functions
+3. **Create Internet Gateway**:
+   - Navigate to "Internet Gateways" in the VPC Dashboard.
+   - Click on "Create internet gateway".
+   - Attach the internet gateway to your VPC.
 
-1. **Create Lambda Functions**:
-   - Configure Lambda functions to connect to both public and private RDS databases.
-   - Ensure Lambda functions have the necessary permissions and VPC access.
+4. **Route Table**:
+   - Navigate to "Route Tables" in the VPC Dashboard.
+   - Create a route table for the public subnet.
+   - Edit routes and add a route that directs `0.0.0.0/0` to the Internet Gateway.
+   - Associate the public subnet with this route table.
 
-2. **Data Analysis Logic**:
-   - Implement data analysis logic within the Lambda functions.
+### 2. Setting Up RDS Instances
 
-### Storing Results in S3
+1. **Create Public RDS Instance**:
+   - Navigate to the RDS Dashboard.
+   - Click on "Create database".
+   - Choose a database engine (e.g., MySQL).
+   - Select the "Free tier" template if applicable.
+   - In "Connectivity", select the VPC you created.
+   - Ensure "Publicly accessible" is set to `Yes`.
+   - Choose the public subnet for the database.
+   - Set up the database credentials and configurations.
+   - Click "Create database".
+
+2. **Create Private RDS Instance**:
+   - Follow the same steps as the public RDS instance.
+   - Ensure "Publicly accessible" is set to `No`.
+   - Choose the private subnet for the database.
+   - Click "Create database".
+
+### 3. Setting Up Lambda Functions
+
+1. **Create a Lambda Function**:
+   - Navigate to the Lambda Dashboard.
+   - Click on "Create function".
+   - Choose "Author from scratch".
+   - Set the function name and runtime (e.g., Python 3.8).
+   - In "Permissions", choose an existing role or create a new role with basic Lambda permissions.
+
+2. **Configure VPC Access for Lambda**:
+   - In the Lambda function configuration, go to the "VPC" section.
+   - Select the VPC you created.
+   - Choose the private subnet.
+   - Choose the appropriate security group that allows access to the RDS instance.
+
+3. **Add Environment Variables**:
+   - Add environment variables for database connection details (e.g., hostname, username, password).
+
+4. **Deploy Code**:
+   - Write and deploy your Lambda function code that connects to the RDS instances, performs data analysis, and stores results in S3.
+
+### 4. Storing Results in S3
 
 1. **Create an S3 Bucket**:
-   - Set up an S3 bucket to store the results of the data analysis.
+   - Navigate to the S3 Dashboard.
+   - Click on "Create bucket".
+   - Set a unique name for your bucket.
+   - Choose the region.
+   - Configure bucket settings as needed.
+   - Click "Create bucket".
 
-2. **Configure Lambda Output**:
-   - Ensure Lambda functions store their results in the specified S3 bucket.
+2. **Configure Lambda to Store Results**:
+   - Ensure your Lambda function code includes logic to store analysis results in the specified S3 bucket.
 
 ## Conclusion
 
